@@ -2,10 +2,10 @@
     <body>
         <%- include('../common/nav') %>
         <main>
-            <div class="min-h-[95vh] flex items-center justify-center bg-gradient-to-br from-purple-200 via-white to-blue-300 px-4 py-10">
+            <div class="min-h-[95vh] flex items-center justify-center bg-linear-to-br from-purple-200 via-white to-blue-300 px-4 py-10">
                 <div class="max-w-xl w-full bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center space-y-8">
                     <% if (errors.length > 0) { %>
-                        <div class="w-full bg-gradient-to-r from-red-400/10 to-red-100/40 border border-red-300 rounded-2xl shadow-inner p-6 mb-4 animate-fade-in">
+                        <div class="w-full bg-linear-to-r from-red-400/10 to-red-100/40 border border-red-300 rounded-2xl shadow-inner p-6 mb-4 animate-fade-in">
                             <div class="flex items-center mb-3">
                                 <svg class="w-8 h-8 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                   <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="#fee2e2"/>
@@ -67,7 +67,7 @@
                             <input type="checkbox" name="terms" id="terms" required class="accent-blue-500">
                             <label for="terms" class="text-sm text-gray-600">I agree to the <a href="" class="text-blue-500 hover:underline">terms and conditions</a></label>
                         </div>
-                        <button class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-lg p-3 shadow-lg hover:from-blue-600 hover:to-purple-600 transition" type="submit">
+                        <button class="w-full bg-linear-to-r from-blue-500 to-purple-500 text-white font-bold rounded-lg p-3 shadow-lg hover:from-blue-600 hover:to-purple-600 transition" type="submit">
                             Register
                         </button>
                     </form>
