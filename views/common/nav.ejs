@@ -1,0 +1,13 @@
+<header>
+  <% let navClass = 'bg-gray-300 px-2 p-1 rounded-md'; %>
+  <nav class="w-full">
+    <ul class="flex items-center gap-4 p-4 bg-green-600">
+      <li class="<%= currentPage === 'home' ? navClass : '' %>"><a href="/">Home</a></li>
+      <li class="<%= currentPage === 'home-list' ? navClass : '' %>"><a href="/home-list">Home List</a></li>
+      <li class="<%= currentPage === 'favorite-list' ? navClass : '' %>"><a href="/favorite-list">Favorite List</a></li>
+      <li class="<%= currentPage === 'bookings' ? navClass : '' %>"><a href="/bookings">Bookings</a></li>
+      <li class="ml-auto <%= currentPage === 'admin-home-list' ? navClass : '' %>"><a href="/admin/home-list">Admin Home List</a></li>
+      <li class="<%= currentPage === 'add-home' ? navClass : '' %>"><a href="/admin/add-home/new">Add Home</a></li>
+    </ul>
+  </nav>
+</header>

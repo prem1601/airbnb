@@ -1,0 +1,37 @@
+<%- include('../common/head') %>
+    <body>
+        <%- include('../common/nav') %>
+
+        <main> 
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-8 px-4">
+                <% homes.forEach(home => { %>
+                    <div class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col items-center border border-gray-200 hover:shadow-2xl transition duration-200">
+                        <img 
+                            src="https://a0.muscache.com/im/pictures/81dca5d6-5a86-49bc-8eca-4a8610a07d27.jpg" 
+                            alt="<%= home.name %>" 
+                            class="w-full h-56 object-cover object-center"
+                        />
+                        <div class="flex justify-between w-full">
+                            <div class="p-6 w-full flex-1 flex flex-col justify-between">
+                                <h2 class="text-xl font-bold text-gray-800"><%= home.name %></h2>
+                                <p class="text-gray-500 mb-2"><%= home.description %></p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-semibold text-indigo-600">₹<%= home.price %></span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between pt-5 pe-2 gap-2">
+                                <div>
+                                    <a class="bg-blue-500 text-white rounded-md p-2 block cursor-pointer" href="/admin/add-home/<%= home.id %>">Edit</a>
+                                </div>
+                                <form action="/admin/delete-home/<%= home.id %>" method="post">
+                                    <button type="submit" class="bg-red-500 text-white rounded-md p-2 cursor-pointer">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </main>
+
+</body>
+</html>
