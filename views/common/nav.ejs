@@ -1,13 +1,45 @@
 <header>
-  <% let navClass = 'bg-gray-300 px-2 p-1 rounded-md'; %>
+  <% 
+    let navClass = 'text-white/90 hover:text-black transition hover:bg-gray-300 px-2 p-1 rounded-md';
+    let navLinkClass = 'px-3 py-1 rounded-lg transition-colors duration-200';
+    let navLinkActiveClass = 'bg-gray-300 px-2 p-1 rounded-md font-semibold text-black shadow-lg scale-105';
+  %>
   <nav class="w-full">
-    <ul class="flex items-center gap-4 p-4 bg-green-600">
-      <li class="<%= currentPage === 'home' ? navClass : '' %>"><a href="/">Home</a></li>
-      <li class="<%= currentPage === 'home-list' ? navClass : '' %>"><a href="/home-list">Home List</a></li>
-      <li class="<%= currentPage === 'favorite-list' ? navClass : '' %>"><a href="/favorite-list">Favorite List</a></li>
-      <li class="<%= currentPage === 'bookings' ? navClass : '' %>"><a href="/bookings">Bookings</a></li>
-      <li class="ml-auto <%= currentPage === 'admin-home-list' ? navClass : '' %>"><a href="/admin/home-list">Admin Home List</a></li>
-      <li class="<%= currentPage === 'add-home' ? navClass : '' %>"><a href="/admin/add-home/new">Add Home</a></li>
+    <ul class="flex items-center gap-6 px-6 py-4 bg-gradient-to-r from-blue-500 to-purple-500 shadow-md">
+      <li class="<%= currentPage === 'home' ? navLinkActiveClass : navClass %>">
+        <a href="/" class="<%= navLinkClass %>">Home</a>
+      </li>
+      <% if (isLoggedIn) { %>
+        <li class="<%= currentPage === 'home-list' ? navLinkActiveClass : navClass %>">
+          <a href="/home-list" class="<%= navLinkClass %>">Home List</a>
+        </li>
+        <li class="<%= currentPage === 'favorite-list' ? navLinkActiveClass : navClass %>">
+          <a href="/favorite-list" class="<%= navLinkClass %>">Favorite List</a>
+        </li>
+        <li class="<%= currentPage === 'bookings' ? navLinkActiveClass : navClass %>">
+          <a href="/bookings" class="<%= navLinkClass %>">Bookings</a>
+        </li>
+        <li class="ml-auto <%= currentPage === 'admin-home-list' ? navLinkActiveClass : navClass %>">
+          <a href="/admin/home-list" class="<%= navLinkClass %>">Admin Home List</a>
+        </li>
+        <li class="<%= currentPage === 'add-home' ? navLinkActiveClass : navClass %>">
+          <a href="/admin/add-home/new" class="<%= navLinkClass %>">Add Home</a>
+        </li>
+      <% } %>
+      <% if (isLoggedIn) { %>
+        <li class="<%= currentPage === 'logout' ? navLinkActiveClass : navClass %>">
+          <form action="/logout" method="post">
+            <button type="submit" class="<%= navLinkClass %> cursor-pointer">Logout</button>
+          </form>
+        </li>
+      <% } else { %>
+        <li class="ml-auto <%= currentPage === 'login' ? navLinkActiveClass : navClass %>">
+          <a href="/login" class="<%= navLinkClass %>">Login</a>
+        </li>
+        <li class="<%= currentPage === 'register' ? navLinkActiveClass : navClass %>">
+          <a href="/register" class="<%= navLinkClass %>">Register</a>
+        </li>
+      <% } %>
     </ul>
   </nav>
 </header>

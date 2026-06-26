@@ -1,0 +1,82 @@
+<%- include('../common/head') %>
+    <body>
+        <%- include('../common/nav') %>
+        <main>
+            <div class="min-h-[95vh] flex items-center justify-center bg-gradient-to-br from-purple-200 via-white to-blue-300 px-4 py-10">
+                <div class="max-w-xl w-full bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center space-y-8">
+                    <% if (errors.length > 0) { %>
+                        <div class="w-full bg-gradient-to-r from-red-400/10 to-red-100/40 border border-red-300 rounded-2xl shadow-inner p-6 mb-4 animate-fade-in">
+                            <div class="flex items-center mb-3">
+                                <svg class="w-8 h-8 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="#fee2e2"/>
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01" stroke="#ef4444" stroke-width="2"/>
+                                </svg>
+                                <h2 class="text-2xl font-bold text-red-600 tracking-tight">Errors</h2>
+                            </div>
+                            <ul class="list-disc list-inside text-red-600 space-y-1 pl-4 text-base">
+                                <% errors.forEach(error => { %>
+                                    <li><%= error %></li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    <% } %>
+                    <!-- <div class="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center shadow-lg mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM6 21v-2a4 4 0 014-4h0a4 4 0 014 4v2" />
+                        </svg>
+                    </div> -->
+                    <h2 class="text-3xl font-extrabold text-gray-800 text-center">Create your account</h2>
+                    <form action="/register" method="post" class="space-y-5 w-full">
+                        <div class="flex gap-2">
+                            <div class="w-full">
+                                <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                                <input class="mt-1 border-2 border-gray-200 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition" type="text" name="firstName" id="firstName" placeholder="First Name" required value="<%= oldInput.firstName %>">
+                            </div>
+                            <div class="w-full">
+                                <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                                <input class="mt-1 border-2 border-gray-200 rounded-lg p-3 w-full focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition" type="text" name="lastName" id="lastName" placeholder="Last Name" value="<%= oldInput.lastName %>">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input class="mt-1 border-2 border-gray-200 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition" type="email" name="email" id="email" placeholder="your@email.com" required value="<%= oldInput.email %>">
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input class="mt-1 border-2 border-gray-200 rounded-lg p-3 w-full focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition" type="password" name="password" id="password" placeholder="••••••••" required>
+                        </div>
+                        <div>
+                            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                            <input class="mt-1 border-2 border-gray-200 rounded-lg p-3 w-full focus:ring-2 focus:ring-purple-200 focus:border-blue-200 transition" type="password" name="confirm_password" id="confirm_password" placeholder="••••••••" required>
+                        </div>
+                        <div>
+                            <span class="block text-sm font-medium text-gray-700 mb-1">Role</span>
+                            <div class="flex gap-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="accent-blue-500" name="role" value="host" required checked="<%= oldInput.role === 'host' %>">
+                                    <span class="ml-2 -mt-1 text-gray-700">Host</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="accent-purple-500" name="role" value="guest" required checked="<%= oldInput.role === 'guest' %>">
+                                    <span class="ml-2 -mt-1 text-gray-700">Guest</span>
+                                </label>
+                            </div>
+            
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" name="terms" id="terms" required class="accent-blue-500">
+                            <label for="terms" class="text-sm text-gray-600">I agree to the <a href="" class="text-blue-500 hover:underline">terms and conditions</a></label>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-lg p-3 shadow-lg hover:from-blue-600 hover:to-purple-600 transition" type="submit">
+                            Register
+                        </button>
+                    </form>
+                    <p class="text-sm text-gray-500 pt-2">
+                        Already have an account?
+                        <a href="/login" class="text-blue-500 hover:underline font-medium">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

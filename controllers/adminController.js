@@ -7,6 +7,7 @@ exports.getAdminHomeList = (req, res, next) => {
         title: "Admin Home List",
         currentPage: "admin-home-list",
         homes: homes,
+        isLoggedIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -22,6 +23,7 @@ exports.getAdminHomeDetails = (req, res, next) => {
         title: "Admin Home Details",
         currentPage: "admin-home-list",
         home: home,
+        isLoggedIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -39,6 +41,7 @@ exports.getAdminAddHome = (req, res, next) => {
           title: "Admin Add Home",
           currentPage: "add-home",
           home: home,
+          isLoggedIn: req.session.isLoggedIn,
         });
       })
       .catch((err) => {
@@ -49,6 +52,7 @@ exports.getAdminAddHome = (req, res, next) => {
       title: "Admin Add Home",
       currentPage: "add-home",
       home: {},
+      isLoggedIn: req.session.isLoggedIn,
     });
   }
 };

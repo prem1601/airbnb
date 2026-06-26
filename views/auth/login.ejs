@@ -1,0 +1,50 @@
+<%- include('../common/head') %>
+    <body>
+        <%- include('../common/nav') %>
+        <main>
+            <div class="min-h-[95vh] flex items-center justify-center bg-gradient-to-br from-blue-200 via-white to-purple-300 p-4 py-10">
+                <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center space-y-8">
+                    <% if (errors.length > 0) { %>
+                        <div class="w-full bg-gradient-to-r from-red-400/10 to-red-100/40 border border-red-300 rounded-2xl shadow-inner p-6 mb-4 animate-fade-in">
+                            <div class="flex items-center mb-3">
+                                <svg class="w-8 h-8 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="#fee2e2"/>
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01" stroke="#ef4444" stroke-width="2"/>
+                                </svg>
+                                <h2 class="text-2xl font-bold text-red-600 tracking-tight">Errors</h2>
+                            </div>
+                            <ul class="list-disc list-inside text-red-600 space-y-1 pl-4 text-base">
+                                <% errors.forEach(error => { %>
+                                    <li><%= error %></li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    <% } %>
+                    <!-- <div class="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center shadow-lg mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M16.24 7.76a6.006 6.006 0 01-8.48 0m8.48 0A6.008 6.008 0 0112 21.24 6.008 6.008 0 017.76 7.76m8.48 0L12 3.52m0 0L7.76 7.76" />
+                        </svg>
+                    </div> -->
+                    <h2 class="text-3xl font-extrabold text-gray-800 text-center">Sign in to Your Account</h2>
+                    <form action="/login" method="post" class="space-y-6 w-full">
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input class="mt-1 border-2 border-gray-200 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition" type="email" name="email" id="email" placeholder="you@email.com" required value="<%= oldInput.email %>">
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input class="mt-1 border-2 border-gray-200 rounded-lg p-3 w-full focus:ring-2 focus:ring-purple-300 focus:border-purple-400 transition" type="password" name="password" id="password" placeholder="••••••••" required>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-lg p-3 shadow-lg hover:from-blue-600 hover:to-purple-600 transition" type="submit">
+                            Login
+                        </button>
+                    </form>
+                    <p class="text-sm text-gray-500 pt-2">
+                        Don't have an account?
+                        <a href="/register" class="text-blue-500 hover:underline font-medium">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
