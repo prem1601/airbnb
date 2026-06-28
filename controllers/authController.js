@@ -1,5 +1,6 @@
 const User = require("../models/userModel.js");
 const { validationResult, check } = require("express-validator");
+const bcrypt = require("bcrypt");
 
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
@@ -14,7 +15,7 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user) {
+  if (!user || !bcrypt.compareSync(password, user.password)) {
     return res.status(401).render("auth/login", {
       title: "Login",
       currentPage: "login",
@@ -74,13 +75,18 @@ exports.postRegister = [
   },
   (req, res, next) => {
     const { firstName, lastName, email, password, role } = req.body;
+
+    const hashedPassword = bcrypt.hashSync(password, 10);
     const user = new User({
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword,
       role,
     });
-    user.save().then(() => res.redirect("/login")).catch((err) => console.log(err));
+    user
+      .save()
+      .then(() => res.redirect("/login"))
+      .catch((err) => console.log(err));
   },
 ];

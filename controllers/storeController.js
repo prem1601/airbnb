@@ -1,5 +1,5 @@
 const Home = require("../models/homeModel");
-const Favourite = require("../models/favouriteModal");
+const User = require("../models/userModel");
 
 exports.getHome = (req, res, next) => {
   Home.find()
@@ -9,6 +9,7 @@ exports.getHome = (req, res, next) => {
         homes: homes,
         currentPage: "home",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     })
     .catch((err) => next(err));
@@ -22,6 +23,7 @@ exports.getHomeList = (req, res, next) => {
         homes: homes,
         currentPage: "home-list",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     })
     .catch((err) => next(err));
@@ -29,10 +31,10 @@ exports.getHomeList = (req, res, next) => {
 
 exports.getFavoriteList = (req, res, next) => {
   let homes = [];
-  Favourite.find()
-    .populate("homeId")
-    .then((favourites) => {
-      homes = favourites.map((favourite) => favourite.homeId);
+  User.findById(req.session.user._id)
+    .populate("favourites")
+    .then((user) => {
+      homes = user.favourites;
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -41,18 +43,9 @@ exports.getFavoriteList = (req, res, next) => {
         homes: homes,
         currentPage: "favorite-list",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     });
-};
-
-exports.addToFavorite = (req, res, next) => {
-  const homeId = req.params.id;
-  const favourite = new Favourite({ homeId });
-  favourite
-    .save()
-    .then((result) => console.log("Favourite added successfully", result))
-    .catch((err) => console.log(err))
-    .finally(() => res.redirect("/favorite-list"));
 };
 
 exports.getHomeDetails = (req, res, next) => {
@@ -64,14 +57,32 @@ exports.getHomeDetails = (req, res, next) => {
         home,
         currentPage: "home-list",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       }),
     )
     .catch((err) => res.redirect("/home-list"));
 };
 
+exports.addToFavorite = (req, res, next) => {
+  const homeId = req.params.id;
+  User.findById(req.session.user._id)
+    .then((user) => {
+      user.favourites.push(homeId);
+      user.save();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => res.redirect("/favorite-list"));
+};
+
 exports.removeFromFavorite = (req, res, next) => {
   const homeId = req.params.id;
-  Favourite.findOneAndDelete({ homeId })
+  User.findById(req.session.user._id)
+    .then((user) => {
+      user.favourites = user.favourites.filter(
+        (favourite) => favourite.toString() !== homeId,
+      );
+      user.save();
+    })
     .then((result) => console.log("Favourite removed successfully", result))
     .catch((err) => console.log(err))
     .finally(() => res.redirect("/favorite-list"));
@@ -82,5 +93,6 @@ exports.getBookings = (req, res, next) => {
     title: "Store Bookings",
     currentPage: "bookings",
     isLoggedIn: req.session.isLoggedIn,
+    user: req.session.user,
   });
 };

@@ -5,11 +5,12 @@
     let navLinkActiveClass = 'bg-gray-300 px-2 p-1 rounded-md font-semibold text-black shadow-lg scale-105';
   %>
   <nav class="w-full">
-    <ul class="flex items-center gap-6 px-6 py-4 bg-linear-to-r from-blue-500 to-purple-500 shadow-md">
+    <ul class="flex items-center gap-2 px-6 py-4 bg-linear-to-r from-blue-500 to-purple-500 shadow-md">
       <li class="<%= currentPage === 'home' ? navLinkActiveClass : navClass %>">
         <a href="/" class="<%= navLinkClass %>">Home</a>
       </li>
       <% if (isLoggedIn) { %>
+        <% if (user.role !== 'host') { %>
         <li class="<%= currentPage === 'home-list' ? navLinkActiveClass : navClass %>">
           <a href="/home-list" class="<%= navLinkClass %>">Home List</a>
         </li>
@@ -19,15 +20,19 @@
         <li class="<%= currentPage === 'bookings' ? navLinkActiveClass : navClass %>">
           <a href="/bookings" class="<%= navLinkClass %>">Bookings</a>
         </li>
+        <% } else  { %>
         <li class="ml-auto <%= currentPage === 'admin-home-list' ? navLinkActiveClass : navClass %>">
           <a href="/admin/home-list" class="<%= navLinkClass %>">Admin Home List</a>
         </li>
         <li class="<%= currentPage === 'add-home' ? navLinkActiveClass : navClass %>">
           <a href="/admin/add-home/new" class="<%= navLinkClass %>">Add Home</a>
         </li>
+        <% } %>
       <% } %>
+
+
       <% if (isLoggedIn) { %>
-        <li class="<%= currentPage === 'logout' ? navLinkActiveClass : navClass %>">
+        <li class="ml-auto <%= currentPage === 'logout' ? navLinkActiveClass : navClass %>">
           <form action="/logout" method="post">
             <button type="submit" class="<%= navLinkClass %> cursor-pointer">Logout</button>
           </form>
