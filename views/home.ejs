@@ -2,13 +2,13 @@
     <body>
         <%- include('./common/nav') %>
         <main>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-8 px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 py-8 px-4">
                 <% homes.forEach(home => { %>
                     <div class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col items-center border border-gray-200 hover:shadow-2xl transition duration-200">
                         <img 
                             src="<%= home.image %>" 
                             alt="<%= home.name %>" 
-                            class="w-full h-56 object-cover object-center"
+                            class="w-full h-40 object-cover object-center"
                         />
                         <div class="flex justify-between w-full">
                             <div class="p-6 w-full flex-1 flex flex-col justify-between">
@@ -18,7 +18,7 @@
                                     <span class="text-lg font-semibold text-indigo-600">₹<%= home.price %></span>
                                 </div>
                                 <div class=" mt-4 flex gap-2">
-                                    <a class="bg-blue-500 text-white rounded-md p-2 block cursor-pointer" href="/home-details/<%= home.id %>">View Details</a>
+                                    <a class="bg-blue-500 text-white rounded-md p-2 block cursor-pointer text-sm" href="/home-details/<%= home.id %>">View Details</a>
                                 </div>
                             </div>
                         </div>

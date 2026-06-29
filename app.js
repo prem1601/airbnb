@@ -4,10 +4,11 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 const path = require("path");
+const dotenv = require("dotenv");
+dotenv.config();
 
-const PORT = 3000;
-const MONGO_URI =
-  "mongodb+srv://preetamchinde_db_user:preetamchinde_db_user@cluster0.qla0c5z.mongodb.net/airbnb?appName=Cluster0";
+const PORT = process.env.PORT;
+const MONGO_URI = process.env.MONGO_URI;
 
 // Internal Modules
 const { uploadSingle } = require("./utils/multer");

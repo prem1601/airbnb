@@ -3,13 +3,13 @@
         <%- include('../common/nav') %>
 
         <main> 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-8 px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 py-8 px-4">
                 <% homes.forEach(home => { %>
                     <div class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col items-center border border-gray-200 hover:shadow-2xl transition duration-200">
                         <img 
                             src="/<%= home.image.split('\\').join('/') %>" 
                             alt="<%= home.name %>" 
-                            class="w-full h-56 object-cover object-center"
+                            class="w-full h-40 object-cover object-center"
                         />
                         <div class="flex justify-between w-full">
                             <div class="p-6 w-full flex-1 flex flex-col justify-between">
@@ -21,10 +21,10 @@
                             </div>
                             <div class="flex justify-between pt-5 pe-2 gap-2">
                                 <div>
-                                    <a class="bg-blue-500 text-white rounded-md p-2 block cursor-pointer" href="/admin/add-home/<%= home.id %>">Edit</a>
+                                    <a class="bg-blue-500 text-white rounded-md p-2 block cursor-pointer text-sm" href="/admin/add-home/<%= home.id %>">Edit</a>
                                 </div>
                                 <form action="/admin/delete-home/<%= home.id %>" method="post">
-                                    <button type="submit" class="bg-red-500 text-white rounded-md p-2 cursor-pointer">Delete</button>
+                                    <button type="submit" class="bg-red-500 text-white rounded-md p-2 cursor-pointer text-sm">Delete</button>
                                 </form>
                             </div>
                         </div>

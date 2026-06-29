@@ -49,13 +49,14 @@ exports.getFavoriteList = (req, res, next) => {
 };
 
 exports.getHomeDetails = (req, res, next) => {
+  console.log("req.session.user", req);
   const homeId = req.params.id;
   Home.findById(homeId)
     .then((home) =>
       res.render("store/home-details", {
         title: "Store Home Details",
         home,
-        currentPage: "home-list",
+        currentPage: "home",
         isLoggedIn: req.session.isLoggedIn,
         user: req.session.user,
       }),

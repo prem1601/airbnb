@@ -1,12 +1,18 @@
 const Home = require("../models/homeModel");
+const User = require("../models/userModel");
+const fs = require("fs");
 
 exports.getAdminHomeList = (req, res, next) => {
+  const user = req.session.user;
   Home.find()
     .then((homes) => {
+      const userHomes = homes.filter((home) =>
+        user.homes.includes(home._id.toString()),
+      );
       res.render("admin/list", {
         title: "Admin Home List",
         currentPage: "admin-home-list",
-        homes: homes,
+        homes: userHomes,
         isLoggedIn: req.session.isLoggedIn,
         user: req.session.user,
       });
@@ -44,33 +50,39 @@ exports.getAdminAddHome = (req, res, next) => {
   }
 };
 
-exports.addAdminHome = (req, res, next) => {
+exports.addAdminHome = async (req, res, next) => {
+  const reqUser = req.session.user;
   const { id, name, location, price, description } = req.body;
 
   const image = req.file?.path;
   const requestData = { name, location, price, description };
 
-  if (image) requestData.image = image;
-
+  if (image) {
+    requestData.image = image;
+  }
+  
   if (id) {
-    Home.findByIdAndUpdate(id, requestData)
-      .then((result) => console.log("Home updated successfully", result))
-      .catch((err) => console.log(err))
-      .finally(() => res.redirect("/admin/home-list"));
+    if (req.body.image && image) fs.unlinkSync(req.body.image);
+    await Home.findByIdAndUpdate(id, requestData);
+    res.redirect("/admin/home-list");
   } else {
     const home = new Home(requestData);
-    home
-      .save()
-      .then((result) => console.log("Home added successfully", result))
-      .catch((err) => console.log(err))
-      .finally(() => res.redirect("/admin/home-list"));
+    const savedHome = await home.save();
+    const user = await User.findById(reqUser._id);
+    reqUser.homes.push(savedHome._id);
+    user.homes.push(savedHome._id);
+    await user.save();
+    res.redirect("/admin/home-list");
   }
 };
 
-exports.deleteAdminHome = (req, res, next) => {
+exports.deleteAdminHome = async (req, res, next) => {
+  const reqUser = req.session.user;
   const id = req.params.id;
-  Home.findOneAndDelete({ _id: id })
-    .then((result) => console.log("Home deleted successfully", result))
-    .catch((err) => console.log(err))
-    .finally(() => res.redirect("/admin/home-list"));
+  await Home.findOneAndDelete({ _id: id });
+  const user = await User.findById(reqUser._id);
+  const newHomes = user.homes.filter((homeId) => homeId.toString() !== id);
+  user.homes = newHomes;
+  await user.save();
+  res.redirect("/admin/home-list");
 };

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./userModel");
 
 const homeSchema = new mongoose.Schema({
   name: { type: String, required: true },
