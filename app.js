@@ -3,12 +3,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
+const path = require("path");
 
 const PORT = 3000;
 const MONGO_URI =
   "mongodb+srv://preetamchinde_db_user:preetamchinde_db_user@cluster0.qla0c5z.mongodb.net/airbnb?appName=Cluster0";
 
 // Internal Modules
+const { uploadSingle } = require("./utils/multer");
+const { rootDir } = require("./utils/pathUtils.js");
 const authRouter = require("./routers/authRouter");
 const storeRouter = require("./routers/storeRouter");
 const adminRouter = require("./routers/adminRouter");
@@ -19,7 +22,14 @@ const app = express();
 // Configuration
 app.set("view engine", "ejs");
 app.set("views", "views");
+
+app.use("/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/admin/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/home-details/uploads", express.static(path.join(rootDir, "uploads")));
+app.use(express.static(path.join(rootDir, "public")));
+app.use(uploadSingle);
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
   session({
     secret: "bnbairbnb",
@@ -36,19 +46,10 @@ app.use(
   }),
 );
 
-// Middleware
-// app.use((req, res, next) => {
-//   if (!req.session.isLoggedIn) res.redirect("/login");
-//   next();
-// });
-
 // Routes
 app.use(authRouter);
 app.use("/", storeRouter);
 app.use("/admin", adminRouter);
-
-// Static Files
-app.use(express.static("public"));
 
 // Database Connection
 mongoose

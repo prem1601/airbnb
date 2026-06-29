@@ -8,8 +8,8 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-4">
           <%= home.id ? 'Update' : 'Add' %> Home
         </h1>
-        <form action="/admin/add-home" method="post">
-          <input type="hidden" name="id" value="<%= home.id || '' %>">
+        <form action="/admin/add-home" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="<%= home?.id || '' %>">
           <input
             class="border-2 border-gray-300 rounded-md p-2 w-full mb-3"
             type="text"
@@ -33,17 +33,15 @@
           />
           <input
             class="border-2 border-gray-300 rounded-md p-2 w-full mb-3"
-            type="text"
+            type="file"
             name="image"
-            placeholder="File Url"
-            value="<%= home.image || '' %>"
+            accept="image/jpeg, image/png, image/jpg"
           />
           <textarea
             class="border-2 border-gray-300 rounded-md p-2 w-full mb-3"
             name="description"
             placeholder="Description"
-          >
-<%= home.description || '' %></textarea
+          ><%= home.description || '' %></textarea
           >
           <button
             class="bg-blue-500 text-white rounded-md p-2 cursor-pointer"

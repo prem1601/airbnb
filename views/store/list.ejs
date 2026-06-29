@@ -6,16 +6,17 @@
                 <% homes.forEach(home => { %>
                     <div class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col items-center border border-gray-200 hover:shadow-2xl transition duration-200">
                         <img 
-                            src="https://a0.muscache.com/im/pictures/81dca5d6-5a86-49bc-8eca-4a8610a07d27.jpg" 
+                            src="<%= home.image %>" 
                             alt="<%= home.name %>" 
                             class="w-full h-56 object-cover object-center"
                         />
                         <div class="flex justify-between w-full">
                             <div class="p-6 w-full flex-1 flex flex-col justify-between">
-                                <h2 class="text-xl font-bold text-gray-800 mb-2"><%= home.name %></h2>
-                                <p class="text-gray-500 mb-4"><%= home.description %></p>
+                                <h2 class="text-xl font-bold text-gray-800 mb-1"><%= home.name %></h2>
+                                <p class="text-gray-500"><%= home.location %></p>
+                                <p class="text-gray-500"><%= home.description %></p>
                                 <div>
-                                    <span class="text-lg font-semibold text-indigo-600">₹<%= home.price %></span>
+                                    <span class="text-lg font-semibold text-indigo-600">₹<%= home.price.toLocaleString() %> / per night</span>
                                 </div>
                                 <div class=" mt-4 flex gap-2">
                                     <a class="bg-blue-500 text-white rounded-md p-2 block cursor-pointer" href="/home-details/<%= home.id %>">View Details</a>

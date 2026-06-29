@@ -12,10 +12,12 @@
                         <p class="text-lg text-gray-600 mb-2"><span class="font-semibold">Location:</span> <%= home.location %></p>
                         <p class="text-xl text-blue-600 font-semibold mb-4">₹<%= home.price.toLocaleString() %> / per night</p>
                         <p class="text-gray-700 mb-6"><%= home.description %></p>
-                        <form action="/add-to-favorite/<%= home.id %>" method="post">
-                            <input type="hidden" name="home_id" value="<%= home.id %>">
-                            <button type="submit" class="bg-blue-500 text-white rounded-md p-2">Add to Favorite</button>
-                        </form>
+                        <% if (user.role !== 'host') { %>
+                            <form action="/add-to-favorite/<%= home.id %>" method="post">
+                                <input type="hidden" name="home_id" value="<%= home.id %>">
+                                <button type="submit" class="bg-blue-500 text-white rounded-md p-2">Add to Favorite</button>
+                            </form>
+                        <% } %>
                     </div>
                 </div>
             </div>

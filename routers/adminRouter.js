@@ -4,7 +4,6 @@ const adminRouter = express.Router();
 const adminController = require("../controllers/adminController");
 
 adminRouter.get("/home-list", adminController.getAdminHomeList);
-adminRouter.get("/home-details/:id", adminController.getAdminHomeDetails);
 
 adminRouter.get("/add-home/:id", adminController.getAdminAddHome);
 adminRouter.post("/add-home", adminController.addAdminHome);

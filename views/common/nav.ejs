@@ -21,7 +21,7 @@
           <a href="/bookings" class="<%= navLinkClass %>">Bookings</a>
         </li>
         <% } else  { %>
-        <li class="ml-auto <%= currentPage === 'admin-home-list' ? navLinkActiveClass : navClass %>">
+        <li class="<%= currentPage === 'admin-home-list' ? navLinkActiveClass : navClass %>">
           <a href="/admin/home-list" class="<%= navLinkClass %>">Admin Home List</a>
         </li>
         <li class="<%= currentPage === 'add-home' ? navLinkActiveClass : navClass %>">

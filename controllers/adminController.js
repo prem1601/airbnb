@@ -16,23 +16,6 @@ exports.getAdminHomeList = (req, res, next) => {
     });
 };
 
-exports.getAdminHomeDetails = (req, res, next) => {
-  const id = req.params.id;
-  Home.findById(id)
-    .then((home) => {
-      res.render("admin/home-details", {
-        title: "Admin Home Details",
-        currentPage: "admin-home-list",
-        home: home,
-        isLoggedIn: req.session.isLoggedIn,
-        user: req.session.user,
-      });
-    })
-    .catch((err) => {
-      res.redirect("/admin/home-list");
-    });
-};
-
 exports.getAdminAddHome = (req, res, next) => {
   const editId = req.params.id;
   if (editId !== "new") {
@@ -62,9 +45,13 @@ exports.getAdminAddHome = (req, res, next) => {
 };
 
 exports.addAdminHome = (req, res, next) => {
-  const { id, name, location, price, image, description } = req.body;
+  const { id, name, location, price, description } = req.body;
 
-  const requestData = { name, location, price, image, description };
+  const image = req.file?.path;
+  const requestData = { name, location, price, description };
+
+  if (image) requestData.image = image;
+
   if (id) {
     Home.findByIdAndUpdate(id, requestData)
       .then((result) => console.log("Home updated successfully", result))
